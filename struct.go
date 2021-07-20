@@ -6,3 +6,9 @@ type Reporting struct {
 	serverHost string
 	baseUrl    string
 }
+
+type GetReportInput struct {
+}
+
+type GetReportOutput struct {
+}
