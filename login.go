@@ -27,9 +27,9 @@ func loginGetRequestBody(username, password, token string) string {
 	</env:Envelope>`, username, password, token)
 }
 
-func (sfdc *Reporting) Login(username, password, token string) error {
+func (sfdc *Reporting) Login() error {
 
-	requestBody := loginGetRequestBody(html.EscapeString(username), html.EscapeString(password), token)
+	requestBody := loginGetRequestBody(html.EscapeString(sfdc.User), html.EscapeString(sfdc.Password), sfdc.SecToken)
 
 	ua := "login"
 	if sfdc.Sandbox {
