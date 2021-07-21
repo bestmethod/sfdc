@@ -176,6 +176,9 @@ func (sfdc *Reporting) getReportChunk(input *GetReportInput) (output *GetReportO
 	if err != nil {
 		return nil, err
 	}
+	if !result.AllData {
+		return nil, errors.New("report returned partial data - too many results; lower the date-increment")
+	}
 	output = new(GetReportOutput)
 	for _, colName := range result.ReportMetadata.DetailColumns {
 		output.ColumnNames = append(output.ColumnNames, result.ReportExtendedMetadata.DetailColumnInfo[colName].Label)
