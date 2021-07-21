@@ -52,7 +52,18 @@ func (sfdc *Reporting) GetReport(input *GetReportInput) (output *GetReportOutput
 		return nil, err
 	}
 
-	input.logDebug("StartDate=%s EndDate=%s", input.StartDate.Format("2006-01-02"), input.EndDate.Format("2006-01-02"))
+	input.startDate = input.StartDate
+	chunks := 0
+	for !input.startDate.After(input.EndDate) {
+		chunks++
+		input.endDate = input.startDate.AddDate(0, 0, input.IncrementDays)
+		if input.endDate.After(input.EndDate) {
+			input.endDate = input.EndDate
+		}
+		input.startDate = input.endDate.AddDate(0, 0, 1)
+	}
+
+	input.logDebug("Chunks=%d StartDate=%s EndDate=%s", chunks, input.StartDate.Format("2006-01-02"), input.EndDate.Format("2006-01-02"))
 	input.startDate = input.StartDate
 	chunk := 0
 	for !input.startDate.After(input.EndDate) {
@@ -75,6 +86,7 @@ func (sfdc *Reporting) GetReport(input *GetReportInput) (output *GetReportOutput
 
 		input.startDate = input.endDate.AddDate(0, 0, 1)
 	}
+	input.logDebug("Done")
 	return output, nil
 }
 
