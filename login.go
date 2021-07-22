@@ -50,7 +50,6 @@ func (sfdc *Reporting) Login() error {
 	}
 
 	if resp.StatusCode < 200 || resp.StatusCode > 299 {
-		//<faultcode>INVALID_LOGIN</faultcode><faultstring>INVALID_LOGIN: Invalid username, password, security token; or user locked out.</faultstring>
 		re, err := regexp.Compile("<faultcode>(.*)</faultcode>")
 		if err != nil {
 			return fmt.Errorf("regex compile error: %s", err)
@@ -119,34 +118,3 @@ func loginGetRequestBody(username, password, token string) string {
 		</env:Body>
 	</env:Envelope>`, username, password, token)
 }
-
-/*
-<?xml version="1.0" encoding="UTF-8"?>
-<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns="urn:partner.soap.sforce.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<soapenv:Body>
-		<loginResponse>
-			<result>
-				<passwordExpired>false</passwordExpired>
-				<serverUrl>https://xxx.my.salesforce.com/services/Soap/u/7.0/xxxx</serverUrl>
-				<sessionId>xxx</sessionId>
-				<userId>xxx</userId>
-				<userInfo>
-					<accessibilityMode>false</accessibilityMode>
-					<currencySymbol>$</currencySymbol>
-					<organizationId>xxx</organizationId>
-					<organizationMultiCurrency>false</organizationMultiCurrency>
-					<organizationName>xxx</organizationName>
-					<userDefaultCurrencyIsoCode xsi:nil="true"/>
-					<userEmail>xxx</userEmail>
-					<userFullName>xxx</userFullName>
-					<userId>xxx</userId>
-					<userLanguage>en_US</userLanguage>
-					<userLocale>en_US</userLocale>
-					<userTimeZone>Europe/Lisbon</userTimeZone>
-					<userUiSkin>Theme3</userUiSkin>
-				</userInfo>
-			</result>
-		</loginResponse>
-	</soapenv:Body>
-</soapenv:Envelope>
-*/
