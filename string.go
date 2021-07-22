@@ -12,6 +12,6 @@ func (sfdc *Reporting) String() string {
 
 // GetReportOutput.String - print json representation of the report output struct
 func (out *GetReportOutput) String() string {
-	str, _ := json.MarshalIndent(out, "", "    ")
+	str, _ := json.Marshal(out)
 	return string(str)
 }
