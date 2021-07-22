@@ -24,7 +24,7 @@ type GetReportInput struct {
 }
 
 type GetReportOutput struct {
-	Rows        []GetReportRow `json:"rows"` 		// a list of rows with their colums in each row
+	Rows        []GetReportRow `json:"rows"`        // a list of rows with their colums in each row
 	ColumnNames []string       `json:"columnNames"` // a list of column names present; does not guarantee all columns exist in each row, user must check this for each row when parsing
 }
 
